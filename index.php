@@ -1,6 +1,9 @@
 <?php
 
+	require_once "admin_middleware.php";
 	require_once "connect.php";
+	require_once "get_items_in_cart.php";
+
 
 	$connection = getConnection();
 
@@ -20,8 +23,15 @@
 	<title>Noisebleed Records</title>
 	<!-- bootstrap -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 	<!-- jQuery -->
-	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"
+		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<!-- JavaScript Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+	</script>
+
 </head>
 
 <body>
@@ -45,28 +55,37 @@
 			</thead>
 			<tbody>
 				<?php foreach ($records as $key => $record): ?>
-					<tr>
-						<th scope="row"><?php echo $record['id'] ?></th>
-						<td><?php echo $record['artist'] ?></td>
-						<td><?php echo $record['album_name'] ?></td>
-						<td><?php echo $record['year'] ?></td>
-						<td><a href="<?php echo $record['img_src'] ?>" target="_blank"><?php echo $record['album_name'] ?></a></td>
-						<td><?php echo $record['stock'] ?></td>
-						<td>
-							<a href="edit_record_page.php?id=<?php echo $record['id'] ?>" class="btn btn-dark mb-3">Edit</a>
-							<form action="delete_record_in_database.php" method="POST" class="pb-3">
-								<input type="hidden" name="id" value="<?php echo $record['id'] ?>">
-								<button type="submit" class="btn btn-dark">Delete</button>
-							</form>
+				<tr>
+					<th scope="row"><?php echo $record['id'] ?></th>
+					<td><?php echo $record['artist'] ?></td>
+					<td><?php echo $record['album_name'] ?></td>
+					<td><?php echo $record['year'] ?></td>
+					<td><a href="<?php echo $record['img_src'] ?>"
+							target="_blank"><?php echo $record['album_name'] ?></a></td>
+					<td><?php echo $record['stock'] ?></td>
+					<td>
+						<a href="edit_record_page.php?id=<?php echo $record['id'] ?>" class="btn btn-dark mb-3">Edit</a>
+						<form action="delete_record_in_database.php" method="POST" class="pb-3">
+							<input type="hidden" name="id" value="<?php echo $record['id'] ?>">
+							<button type="submit" class="btn btn-dark">Delete</button>
+						</form>
 
-							<a href="add_tracks_page.php?id=<?php echo $record['id'] ?>" class="btn btn-dark mb-3">Add tracks</a>
-						</td>
-					</tr>
+						<a href="add_tracks_page.php?id=<?php echo $record['id'] ?>" class="btn btn-dark mb-3">Add
+							tracks</a>
+					</td>
+				</tr>
 				<?php endforeach; ?>
 			</tbody>
 		</table>
 
 	</div>
 </body>
+
+<script>
+	var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+	var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+		return new bootstrap.Popover(popoverTriggerEl)
+	})
+</script>
 
 </html>
